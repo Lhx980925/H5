@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>刮奖</title>
+    <style>
+        canvas {
+            border: 1px solid magenta;
+        }
+    </style>
+</head>
+<body>
+<canvas id="canvas1" width="300" height="150" style="position: absolute; left: 10px;top: 10px;"></canvas>
+<canvas id="canvas2" width="300" height="150" style="position: absolute; left: 10px;top: 10px;"></canvas>
+<div id="tumo" style="margin-top:200px;"></div>
+
+<script>
+    var canvas1=document.getElementById('canvas1');
+    var context1=canvas1.getContext('2d');
+    var jiang=['一等奖','二等奖','三等奖','谢谢惠顾'];
+    context1.font="bold 75px 宋体";
+    context1.textAlign="center";
+    context1.fillStyle="orange";
+    var txt=jiang[(Math.random()*jiang.length)|0];
+    context1.fillText(txt, 149, 105);
+
+
+    var canvas2=document.getElementById('canvas2');
+    var context2=canvas2.getContext('2d');
+    context2.fillStyle="#cccccc";
+    context2.fillRect(0,0,300,150);
+    context2.globalCompositeOperation='destination-out';
+
+    canvas2.onmousedown=function(evt){
+        canvas2.onmousemove=function(evt){
+            var x = evt.clientX - canvas2.offsetLeft;
+            var y = evt.clientY - canvas2.offsetTop;
+            context2.beginPath();
+            context2.arc(x,y,20,0,2*Math.PI);
+            context2.fill();
+            context2.stroke();
+            context2.closePath();
+            var imgData=context2.getImageData(0,0,300,150);
+            var quanbu=imgData.data;
+            var kongbai=[];
+            for(var i=0;i<quanbu.length;i+=4){
+                var a=quanbu[i+3];
+                if(a<128){
+                    kongbai.push(a);
+                }
+            }
+            var tumo=document.getElementById("tumo");
+            var bili=kongbai.length/(quanbu.length/4);
+            tumo.innerHTML="涂抹区域百分比为:"+(bili.toFixed(2))*100+"%"+"(每次刷新所得奖励不一样哦~)";
+            console.log(bili);
+            if(bili>0.85){
+                canvas2.style.display="none";
+            }
+        }
+    }
+
+</script>
+</body>
+</html>
