@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+    
+    <head>
+        <title>
+            calculate
+        </title>
+        <meta http-equiv="Content-Type" content="text/html;charaset = utf-8" />
+        <style type="text/css">
+            body {
+                font:bolder 26px 楷体;
+            }
+            #result {
+                text-align:right;
+            }
+            table,td {
+                border:1px solid #C0C0C0;
+            }
+            td {
+                padding:10px;
+            }
+            button {
+                width:50px;
+                height:50px;
+            }
+            button:hover{
+                box-shadow:3px 3px 3px #eee;
+            }
+        </style>
+    </head>
+    
+    <body>
+        <table>
+            <tr>
+                <td colspan="3" id="result">
+                    0
+                </td>
+                <td>
+                    <button type="button" value="C">
+                        C
+                    </button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <button type="button" value="1" >
+                        1
+                    </button>
+                </td>
+                <td>
+                    <button type="button" value="2">
+                        2
+                    </button>
+                </td>
+                <td>
+                    <button type="button" value="3">
+                        3
+                    </button>
+                </td>
+                <td>
+                    <button type="button" value="+">
+                        +
+                    </button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <button type="button" value="4">
+                        4
+                    </button>
+                </td>
+                <td>
+                    <button type="button" value="5">
+                        5
+                    </button>
+                </td>
+                <td>
+                    <button type="button" value="6">
+                        6
+                    </button>
+                </td>
+                <td>
+                    <button type="button" value="-">
+                        -
+                    </button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <button type="button" value="7">
+                        7
+                    </button>
+                </td>
+                <td>
+                    <button type="button" value="8">
+                        8
+                    </button>
+                </td>
+                <td>
+                    <button type="button" value="9">
+                        9
+                    </button>
+                </td>
+                <td>
+                    <button type="button" value="*">
+                        *
+                    </button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <button type="button" value="0">
+                        0
+                    </button>
+                </td>
+                <td>
+                    <button type="button" value=".">
+                        .
+                    </button>
+                </td>
+                <td>
+                    <button type="button" value="=">
+                        =
+                    </button>
+                </td>
+                <td>
+                    <button type="button" value="/">
+                        /
+                    </button>
+                </td>
+            </tr>
+        </table>
+    </body>
+
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+    <script>
+        $("button:not(:eq(15))").each(function(){
+            $(this).click(function(){
+                $("#result").append($(this).val());
+                var Text1=$("#result").text().trim();
+                var Text3=Text1.replace(/^(0+)/gi,"");
+                $("#result").text(Text3);
+            })
+        })
+        $("button:first").click(function(){
+            $("#result").html(0);
+        })
+        $("button:eq(15)").click(function(){
+            var Text2=$("#result").text().trim();
+            var string=eval(Text2);
+            var x=String(string).indexOf(".")+1;
+            if(x>0){
+                $("#result").text(string.toFixed(2));
+            }
+            else{
+                $("#result").text(string);
+            }
+        })
+    </script>
+</html>
